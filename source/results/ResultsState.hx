@@ -26,6 +26,9 @@ import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxCamera;
 import extensions.flixel.FlxUIStateExt;
+#if mobile
+import funkin.mobile.util.TouchUtil;
+#end
 
 using StringTools;
 
@@ -450,6 +453,9 @@ class ResultsState extends FlxUIStateExt
         if(FlxG.keys.anyJustPressed([A])){
             bitmapSongName.x -= moveAmount;
             trace(bitmapSongName.getPosition());
+        }
+        if (controls.PAUSE #if mobile || TouchUtil.justPressed #end)
+
         }
         if(FlxG.keys.anyJustPressed([D])){
             bitmapSongName.x += moveAmount;
