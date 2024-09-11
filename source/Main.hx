@@ -64,6 +64,14 @@ class Main extends Sprite
 		DisableProcessWindowsGhosting() // lets you move the window and such if it's not responding
 		")
 		#end
-	 }
-}
 			
+	ClientPrefs.loadDefaultKeys();
+	addChild(new FlxGame(gameWidth, gameHeight, #if (mobile && MODS_ALLOWED) !CopyState.checkExistingFiles() ? CopyState : #end initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+  #if mobile
+  lime.system.System.allowScreenTimeout = ClientPrefs.screensaver;
+  #if android
+  FlxG.android.preventDefaultKeys = [BACK]; 
+  #end
+  #end	   
+ }
+}			     
