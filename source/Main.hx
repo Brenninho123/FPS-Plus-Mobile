@@ -6,6 +6,9 @@ import flixel.FlxGame;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import debug.*;
+#if mobile
+import mobile.CopyState;
+#end
 
 class Main extends Sprite
 {
@@ -40,6 +43,27 @@ class Main extends Sprite
 		trace("-=Args=-");
 		trace("novid: " + novid);
 		trace("flippymode: " + flippymode);
+	 }
 
-	}
+         public function new()
+	 {
+		#if mobile
+		#if android
+		SUtil.doPermissionsShit();
+		#end
+		Sys.setCwd(SUtil.getStorageDirectory());
+		#end
+
+		CrashHandler.init();
+
+		#if windows
+		@:functionCode("
+		#include <windows.h>
+		#include <winuser.h>
+		setProcessDPIAware() // allows for more crisp visuals
+		DisableProcessWindowsGhosting() // lets you move the window and such if it's not responding
+		")
+		#end
+	 }
 }
+			
